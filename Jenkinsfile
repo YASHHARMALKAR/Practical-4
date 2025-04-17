@@ -11,7 +11,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo "Cloning Node.js app from GitHub..."
-                git url: "${REPO_URL}"
+                 git url: "${REPO_URL}", branch: 'main'
             }
         }
 
