@@ -5,7 +5,7 @@ pipeline {
         stage('Confirm Checkout') {
             steps {
                 echo "Code was successfully checked out by Jenkins."
-                sh 'ls -la'
+                bat 'dir'  // Windows equivalent of 'ls -la'
             }
         }
 
@@ -19,8 +19,11 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 echo "Starting the Node.js server..."
+                // Start the Node.js app in background using start
                 bat 'start /b cmd /c "node index.js > output.log 2>&1"'
-                powershell 'Get-Content output.log -Tail 10'
+                
+                // Display the last few lines of output.log
+                bat 'powershell -Command "Get-Content output.log -Tail 10"'
             }
         }
     }
