@@ -2,38 +2,41 @@ pipeline {
     agent any
 
     environment {
-        NODE_HOME = tool name 'NodeJS 16', type 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-        PATH = ${NODE_HOME}bin${env.PATH}
+        // Change the repo URL to your actual GitHub repo
+        REPO_URL = 'https://github.com/YASHHARMALKAR/Practical-4.git'
+        APP_DIR = 'nodejs-app'
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git url 'httpsgithub.comyour-usernameyour-nodejs-repo.git', branch 'main'
+                echo "Cloning Node.js app from GitHub..."
+                git url: "${REPO_URL}"
             }
         }
 
         stage('Install Dependencies') {
             steps {
+                echo "Installing npm dependencies..."
                 sh 'npm install'
             }
         }
 
-        stage('Deploy to Local Server') {
+        stage('Deploy Application') {
             steps {
-                echo 'Deploying...'
-                sh 'pkill node  true'
-                sh 'nohup npm start &'
+                echo "Starting the Node.js server..."
+                // This assumes app entry point is app.js or index.js
+                sh 'nohup node app.js > output.log 2>&1 &'
             }
         }
     }
 
     post {
         success {
-            echo ' Deployment successful!'
+            echo 'Application deployed successfully!'
         }
         failure {
-            echo ' Deployment failed.'
+            echo 'Deployment failed.'
         }
     }
 }
