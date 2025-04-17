@@ -7,7 +7,7 @@ pipeline {
                 echo "Code was successfully checked out by Jenkins."
                 bat 'dir'  // Windows equivalent of 'ls -la'
             }
-        }
+        }//
 
         stage('Install Dependencies') {
             steps {
